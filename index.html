@@ -2402,7 +2402,7 @@ $('add').addEventListener('click',ouvrirCreation);
    Trois touches : le prénom, la première ligne, un trajet court. Rien n'est obligatoire.
    ===================================================================== */
 const SUGGESTIONS=['Réviser','Lire','Projet perso','Apprendre une langue'];
-let aEtape=0,aInt=15,aLigneNom='';
+let aEtape=0,aInt=5,aLigneNom='';
 const premierLancement=()=>!S.onboarded&&!Object.keys(S.personalLines||{}).length&&!(S.log||[]).length&&!(S.trajets||[]).length&&!enCours()&&!S.coop;
 function etapeAccueil(n){aEtape=n;const A=$('accueil');A.querySelectorAll('.a-pas i').forEach((i,k)=>i.classList.toggle('on',k<=n));
   if(n===0){$('aK').textContent='GARE CENTRALE · BIENVENUE';$('aTitre').textContent='Bienvenue à Horligne\u00a0!';
@@ -2418,14 +2418,14 @@ function etapeAccueil(n){aEtape=n;const A=$('accueil');A.querySelectorAll('.a-pa
     $('aNon').textContent='Retour';$('aOk').textContent='Suivant';
     direAccueil('content',name?`Enchanté, ${name}\u00a0! Chaque objectif devient une ligne. Je m’occupe des billets.`:'Chaque objectif devient une ligne. Je m’occupe des billets.')}
   else{$('aK').textContent='VOIE 7 · PREMIER TRAJET';$('aTitre').textContent='Combien de temps jusqu’à la première gare\u00a0?';
-    $('aCorps').innerHTML=`<div class="a-choix-l" role="radiogroup" aria-label="Temps jusqu’à la première gare">${[[15,'Pour commencer en douceur'],[25,'Le grand classique']].map(([m,t])=>
+    $('aCorps').innerHTML=`<div class="a-choix-l" role="radiogroup" aria-label="Temps jusqu’à la première gare">${[[5,'Pour commencer en douceur'],[15,'Un trajet court'],[25,'Le grand classique']].map(([m,t])=>
         `<button type="button" class="a-choix" role="radio" aria-checked="${m===aInt}" data-int="${m}"><b>${m} min</b><span>${t}</span></button>`).join('')}</div>
       <p class="note">En gare, le train s’arrête : tu descends ou tu continues. Le frein d’urgence reste là en cas de besoin.</p>`;
     $('aNon').textContent='Plus tard';$('aOk').textContent='Monter à bord';
-    direAccueil('fier','Pour un premier trajet, quinze minutes, c’est parfait.')}
+    direAccueil('fier','Pour un premier trajet, cinq minutes, c’est parfait.')}
   A.scrollTop=0}
 function direAccueil(buste,t){$('aBuste').src=`assets/abonnement/web/buste-${buste}.webp`;$('aDit').textContent=t}
-function ouvrirAccueil(){aEtape=0;aInt=15;aLigneNom='';etapeAccueil(0);noter('accueil');sauver();document.body.classList.add('accueil-ouvert');$('accueil').classList.add('on')}
+function ouvrirAccueil(){aEtape=0;aInt=5;aLigneNom='';etapeAccueil(0);noter('accueil');sauver();document.body.classList.add('accueil-ouvert');$('accueil').classList.add('on')}
 function lireNomAccueil(){const v=(($('aNom')||{}).value||'').trim();if(!v||v===name)return;name=v;S.name=v;sauver();$('who').textContent='· '+v;ajusterLieu()}
 function finirAccueil(partir){
   const nom=aLigneNom||'Ma première ligne',id='l'+Date.now().toString(36);S.personalLines=S.personalLines||{};
