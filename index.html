@@ -2372,11 +2372,11 @@ function ouvrirCreation(){
   $('cJours').innerHTML=JOURS.map(([d,l,n])=>`<button type="button" class="jour" data-d="${d}" aria-label="${n}" aria-pressed="false">${l}</button>`).join('');
   ['cNom','cBut'].forEach(i=>$(i).value='');$('cPlombe').setAttribute('aria-checked','false');
   $('creer').classList.add('on');say('Une nouvelle ligne ? J’ai hâte.','salut')}
-/* temps entre les gares : 15, 25 ou 45 min en Voyageur ; à la minute près pour les abonnés (« Autre durée » ouvre l'offre) */
+/* temps entre les gares : 5, 15, 25 ou 45 min en Voyageur ; à la minute près pour les abonnés (« Autre durée » ouvre l'offre) */
 const INTERVALLES_ABO=Array.from({length:179},(_,i)=>i+2);
 function remplirIntervalles(){const opt=(v,d)=>v.map(x=>`<option value="${x}"${x===d?' selected':''}>${x} min</option>`).join(''),v=+$('cInt').value||25;
-  $('cInt').innerHTML=abonne()?opt(INTERVALLES_ABO,v):opt([15,25,45],[15,25,45].includes(v)?v:25)+'<option value="plus">Autre durée… ★</option>';
-  $('cPlan').textContent=abonne()?'Abonné : à la minute près, de 2 à 180 min.':'Voyageur : 15, 25 ou 45 min. Abonné : à la minute près.'}
+  $('cInt').innerHTML=abonne()?opt(INTERVALLES_ABO,v):opt([5,15,25,45],[5,15,25,45].includes(v)?v:25)+'<option value="plus">Autre durée… ★</option>';
+  $('cPlan').textContent=abonne()?'Abonné : à la minute près, de 2 à 180 min.':'Voyageur : 5, 15, 25 ou 45 min. Abonné : à la minute près.'}
 $('cInt').addEventListener('change',()=>{if($('cInt').value!=='plus')return;$('cInt').value='25';ouvrirAbonnement('minutes',remplirIntervalles)});
 $('cPlombe').addEventListener('click',e=>{const b=e.currentTarget;b.setAttribute('aria-checked',b.getAttribute('aria-checked')!=='true')});
 $('cJours').addEventListener('click',e=>{const b=e.target.closest('.jour');if(!b)return;
@@ -4316,7 +4316,7 @@ setInterval(majReparation,5000);
 $('stage').addEventListener('click',()=>{if(enReparation){toast(`Le Contrôleur répare sous le wagon. Retour dans ${minutesAbsence()} min.`);clang()}});
 
 /* ---------- l'abonnement (OFFRE-2026-10-11, validée par l'auteur le 11/10) ----------
-   Voyageur (gratuit) : 2 lignes, 15/25/45 min, 1 train régulier, Coop sur invitation ou avec un code, carnet des 4 dernières semaines,
+   Voyageur (gratuit) : 2 lignes, 5/15/25/45 min, 1 train régulier, Coop sur invitation ou avec un code, carnet des 4 dernières semaines,
    une pub en descendant du train. Abonné : 2,99 €/mois ou 24,99 €/an, essai de 7 jours, aucune pub. Prototype : rien n'est payé.
    L'offre se montre souvent (l'auteur) : le bouton doré de la Gare, chaque limite atteinte, la pub, et une fois par jour après un trajet réussi. */
 const HEROS_PRET=true,CARTE_OR_PRETE=true,ICONES_PRETES=true,BILLET_OR_PRET=true;   // Neuf exports contrôlés dans assets/abonnement/web/.
@@ -4337,7 +4337,7 @@ const RAISONS_ABO={
   gare:['Va plus loin.','Tout Horligne, sans limite. Et ta carte d’abonné passe à l’or.'],
   jour:['Tu roules bien. Va plus loin.','Tout Horligne, sans limite. Et ta carte d’abonné passe à l’or.'],
   lignes:['Plus de deux lignes ?','En Voyageur, deux lignes roulent en même temps. Abonné, autant que tu veux.','lignes'],
-  minutes:['À la minute près.','En Voyageur : 15, 25 ou 45 min entre les gares. Abonné : de 2 à 180 min.','lignes'],
+  minutes:['À la minute près.','En Voyageur : 5, 15, 25 ou 45 min entre les gares. Abonné : de 2 à 180 min.','lignes'],
   reguliers:['Plusieurs trains réguliers ?','En Voyageur, un seul train part tout seul. Abonné, autant que tu veux.','verrou'],
   coop:['Monte à plusieurs.','Le Coop arrive avec les amis : abonné, tu ouvriras des trains pour toute la bande. Sans abonnement, tu monteras quand un ami abonné t’invite.','coop'],
   ligne:['Change tout sur tes lignes.','En Voyageur, tu peux renommer une ligne. Abonné, tu changes aussi son temps entre les gares, son frein, son objectif et son train régulier.','lignes'],
